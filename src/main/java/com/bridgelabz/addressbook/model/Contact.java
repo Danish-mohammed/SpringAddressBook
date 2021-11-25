@@ -19,8 +19,8 @@ public class Contact {
 		this.firstName = contactDTO.firstName;
         this.lastName = contactDTO.lastName;
         this.address = contactDTO.address;
-        this.state = contactDTO.state;
         this.city = contactDTO.city;
+        this.state = contactDTO.state;
         this.zip = contactDTO.zip;
         this.phone = contactDTO.phone;
 	}

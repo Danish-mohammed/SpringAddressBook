@@ -10,14 +10,14 @@ public class ContactDTO {
     public String zip;
     public String phone;
     
-	public ContactDTO(String firstName, String lastName, String address, String state, String city, String zip,
+	public ContactDTO(String firstName, String lastName, String address,  String city,String state, String zip,
 			String phone) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.address = address;
-		this.state = state;
 		this.city = city;
+		this.state = state;
 		this.zip = zip;
 		this.phone = phone;
 	}
