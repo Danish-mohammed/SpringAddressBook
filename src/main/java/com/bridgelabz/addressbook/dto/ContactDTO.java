@@ -4,13 +4,13 @@ import lombok.Data;
 
 public @Data class ContactDTO {
 
-	public String firstName;
-    public String lastName;
-    public String address;
-    public String state;
-    public String city;
-    public String zip;
-    public String phone;
+	private String firstName;
+    private String lastName;
+    private String address;
+    private String state;
+    private String city;
+    private String zip;
+    private String phone;
     
 	public ContactDTO(String firstName, String lastName, String address,  String city,String state, String zip,
 			String phone) {
