@@ -29,25 +29,26 @@ public class AddressBookController {
 	@RequestMapping(value = { "", "/", "/get" })
     public ResponseEntity<ResponseDTO> getContactData() {
 
-        List<Contact> contactList = addressbookservice.getContact();
-        System.out.println(contactList.toString());
-        ResponseDTO response = new ResponseDTO("Get call success", contactList);
+        List<Contact> contactData = addressbookservice.getContact();
+        System.out.println(contactData.toString());
+        ResponseDTO response = new ResponseDTO("Get call success", contactData);
         return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
     }
 
 	
 	 @GetMapping("/get/{contactId}")
 	    public ResponseEntity<ResponseDTO> getContactData(@PathVariable("contactId") int contactId) {
-		 Contact contact = addressbookservice.getContactById(contactId);
-	        ResponseDTO response = new ResponseDTO("Get call success for id", contact);
+		 Contact contactData = addressbookservice.getContactById(contactId);
+	        ResponseDTO response = new ResponseDTO("Get call success for id", contactData);
 	        return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
 
 	    }
 
 	    @PostMapping("/create")
-	    public ResponseEntity<ResponseDTO> addContactData(@RequestBody ContactDTO contactDTO) {
-	        Contact contact = addressbookservice.createContact(contactDTO);
-	        ResponseDTO response = new ResponseDTO("Created contact data for", contact);
+	    public ResponseEntity<ResponseDTO> createContactData(@RequestBody ContactDTO contactDTO) {
+	        Contact contactData = addressbookservice.createContact(contactDTO);
+	        System.out.println(contactData.toString());
+	        ResponseDTO response = new ResponseDTO("Created contact data for", contactData);
 	        return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
 
 	    }
@@ -55,8 +56,8 @@ public class AddressBookController {
 	    @PutMapping("/update/{contactId}")
 	    public ResponseEntity<ResponseDTO> updateContactData(@PathVariable("contactId") int contactId,
 	                                                         @RequestBody ContactDTO contactDTO) {
-	        Contact contact = addressbookservice.updateContact(contactId, contactDTO);
-	        ResponseDTO response = new ResponseDTO("Updated contact data for", contact);
+	        Contact contactData = addressbookservice.updateContact(contactId, contactDTO);
+	        ResponseDTO response = new ResponseDTO("Updated contact data for", contactData);
 	        return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
 
 	    }

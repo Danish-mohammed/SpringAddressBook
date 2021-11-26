@@ -25,8 +25,5 @@ public class ResponseDTO {
 
 	public void setData(Object data) {
 		this.data = data;
-	}
-    
-	
-    
+	}    
 }
