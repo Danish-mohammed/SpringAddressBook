@@ -12,7 +12,5 @@ public class ResponseDTO {
 		super();
 		this.message = message;
 		this.data = data;
-	}
-
- 
+	} 
 }

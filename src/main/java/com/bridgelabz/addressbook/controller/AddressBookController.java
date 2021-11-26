@@ -20,7 +20,7 @@ import com.bridgelabz.addressbook.model.Contact;
 import com.bridgelabz.addressbook.service.IAddressBookService;
 
 @RestController
-@RequestMapping("/addressbookservice")
+@RequestMapping("/addressbookhome")
 public class AddressBookController {
 	
 	@Autowired

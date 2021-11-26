@@ -27,12 +27,9 @@ public class AddressBookService implements IAddressBookService{
 
 	@Override
 	public Contact createContact(ContactDTO contactDTO) {
-		System.out.println("Create Contact");
-		List<Contact> contactData = this.getContact();
-		System.out.println("ContactList: "+contactData.toString());
-		contactList.add( new Contact(contactData.size() + 1, contactDTO));
-		System.out.println(contactList.toString());
-        return contactList.get(contactList.size() - 1);
+		Contact contactData = new Contact(contactList.size()+1, contactDTO);
+		contactList.add(contactData);
+		return contactData;
 	}
 
 	@Override
