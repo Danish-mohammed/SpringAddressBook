@@ -21,8 +21,11 @@ import com.bridgelabz.addressbook.dto.ResponseDTO;
 import com.bridgelabz.addressbook.model.Contact;
 import com.bridgelabz.addressbook.service.IAddressBookService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
 @RequestMapping("/addressbookhome")
+@Slf4j
 public class AddressBookController {
 	
 	@Autowired
@@ -32,7 +35,7 @@ public class AddressBookController {
     public ResponseEntity<ResponseDTO> getContactData() {
 
         List<Contact> contactData = addressbookservice.getContact();
-        System.out.println(contactData.toString());
+        log.debug("Address Book DTO: " +contactData.toString());
         ResponseDTO response = new ResponseDTO("Get call success", contactData);
         return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
     }
@@ -49,7 +52,7 @@ public class AddressBookController {
 	    @PostMapping("/create")
 	    public ResponseEntity<ResponseDTO> createContactData(@Valid @RequestBody ContactDTO contactDTO) {
 	        Contact contactData = addressbookservice.createContact(contactDTO);
-	        System.out.println(contactData.toString());
+	        log.debug("Address Book DTO: " +contactData.toString());
 	        ResponseDTO response = new ResponseDTO("Created contact data for", contactData);
 	        return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
 
@@ -59,6 +62,8 @@ public class AddressBookController {
 	    public ResponseEntity<ResponseDTO> updateContactData(@PathVariable("contactId") int contactId,
 	                                                         @Valid @RequestBody ContactDTO contactDTO) {
 	        Contact contactData = addressbookservice.updateContact(contactId, contactDTO);
+	        log.debug("AddressBook Contact After Update " + contactData.toString());
+
 	        ResponseDTO response = new ResponseDTO("Updated contact data for", contactData);
 	        return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
 

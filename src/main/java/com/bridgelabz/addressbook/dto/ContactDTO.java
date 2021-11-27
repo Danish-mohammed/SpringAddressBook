@@ -1,9 +1,10 @@
 package com.bridgelabz.addressbook.dto;
 
 import lombok.Data;
+import lombok.ToString;
 import javax.validation.constraints.*;
 
-
+@ToString
 public @Data class ContactDTO {
 
 	@Pattern(regexp = "^[A-Z]{1}[a-zA-Z\\s]{2,}$", message = "Address book is Invalid!!! ")
@@ -18,13 +19,16 @@ public @Data class ContactDTO {
 	@NotEmpty(message = "Address cannot be null")
 	public String address;
 	
+    @NotEmpty(message = "State can not be NULL")
 	public String state;
+    
+	@NotEmpty(message = "city can not be NULL")
 	public String city;
 	
 	@Pattern(regexp = "^[0-9]{3}\\s{0,1}[0-9]{3}$", message = "Invalid Zip")
 	public String zip;
 	
-	@Pattern(regexp = "^[0-9]{2}?[\\s,-]{0,1}[7-9]{1}[0-9]{9}$", message = "Invalid Phone number")
+	@Pattern(regexp = "^[[+]?[0-9]{2}?[\\s,-]?]?[7-9]{1}[0-9]{9}$", message = "Invalid Phone number")
 	public String phone;
 
 	public ContactDTO(String firstName, String lastName, String address, String city, String state, String zip,
@@ -37,12 +41,6 @@ public @Data class ContactDTO {
 		this.state = state;
 		this.zip = zip;
 		this.phone = phone;
-	}
-
-	@Override
-	public String toString() {
-		return "ContactDTO [firstName=" + firstName + ", lastName=" + lastName + ", address=" + address + ", state="
-				+ state + ", city=" + city + ", zip=" + zip + ", phone=" + phone + "]";
 	}
 
 }

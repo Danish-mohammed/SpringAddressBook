@@ -20,15 +20,19 @@ public class Contact {
 	public Contact(int contactId, ContactDTO contactDTO) {
 		super();
 		this.contactId = contactId;
+		this.updateContact(contactDTO);
+	}
+	
+	private void updateContact(ContactDTO contactDTO) {
 		this.firstName = contactDTO.firstName;
         this.lastName = contactDTO.lastName;
         this.address = contactDTO.address;
         this.city = contactDTO.city;
         this.state = contactDTO.state;
         this.zip = contactDTO.zip;
-        this.phone = contactDTO.phone;
+        this.phone = contactDTO.phone;		
 	}
-	
+
 	public Contact() {
 		super();
 		// TODO Auto-generated constructor stub
