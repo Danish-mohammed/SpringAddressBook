@@ -29,13 +29,13 @@ public class Contact {
 	 private String zip;
 	 private String phone;
 	
-	public Contact(int contactId, ContactDTO contactDTO) {
+	public Contact(ContactDTO contactDTO) {
 		super();
-		this.contactId = contactId;
+		
 		this.updateContact(contactDTO);
 	}
 	
-	private void updateContact(ContactDTO contactDTO) {
+	public void updateContact(ContactDTO contactDTO) {
 		this.firstName = contactDTO.firstName;
         this.lastName = contactDTO.lastName;
         this.address = contactDTO.address;
