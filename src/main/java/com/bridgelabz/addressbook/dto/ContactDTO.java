@@ -31,16 +31,4 @@ public @Data class ContactDTO {
 	@Pattern(regexp = "^[[+]?[0-9]{2}?[\\s,-]?]?[7-9]{1}[0-9]{9}$", message = "Invalid Phone number")
 	public String phone;
 
-	public ContactDTO(String firstName, String lastName, String address, String city, String state, String zip,
-			String phone) {
-		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.address = address;
-		this.city = city;
-		this.state = state;
-		this.zip = zip;
-		this.phone = phone;
-	}
-
 }
