@@ -35,13 +35,13 @@ public class AddressBookService implements IAddressBookService{
 	@Override
 	public Contact updateContact(int contactId, ContactDTO contactDTO) {
 		Contact contact = this.getContactById(contactId);
-        contact.setFirstName(contactDTO.getFirstName());
-        contact.setLastName(contactDTO.getLastName());
-        contact.setAddress(contactDTO.getAddress());
-        contact.setState(contactDTO.getState());
-        contact.setCity(contactDTO.getCity());
-        contact.setZip(contactDTO.getZip());
-        contact.setPhone(contactDTO.getPhone());
+		contact.setFirstName(contactDTO.firstName);
+        contact.setLastName(contactDTO.lastName);
+        contact.setAddress(contactDTO.address);
+        contact.setState(contactDTO.state);
+        contact.setCity(contactDTO.city);
+        contact.setZip(contactDTO.zip);
+        contact.setPhone(contactDTO.phone);
         contactList.set(contactId - 1, contact);
         return contact;
 	}

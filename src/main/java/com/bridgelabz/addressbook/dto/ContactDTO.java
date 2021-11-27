@@ -13,14 +13,18 @@ public @Data class ContactDTO {
 	@Pattern(regexp = "^[A-Z]{1,}[a-zA-z\\s]{2,}$", message = "Address book is Invalid!!! ")
 	@NotEmpty(message = "first name cannot be null")
 	public String lastName;
+	
 	@Pattern(regexp = "^[A-Za-z,.0-9]{3,}$", message = "Address is Invalid!!! ")
 	@NotEmpty(message = "Address cannot be null")
 	public String address;
+	
 	public String state;
 	public String city;
-	@Pattern(regexp = "^[0-9]{3}\\s{0,1}[0-9]{3}$")
+	
+	@Pattern(regexp = "^[0-9]{3}\\s{0,1}[0-9]{3}$", message = "Invalid Zip")
 	public String zip;
-	@Pattern(regexp = "^^[0-9]{2}?[\\s,-]{0,1}[7-9]{1}[0-9]{9}$")
+	
+	@Pattern(regexp = "^[0-9]{2}?[\\s,-]{0,1}[7-9]{1}[0-9]{9}$", message = "Invalid Phone number")
 	public String phone;
 
 	public ContactDTO(String firstName, String lastName, String address, String city, String state, String zip,
