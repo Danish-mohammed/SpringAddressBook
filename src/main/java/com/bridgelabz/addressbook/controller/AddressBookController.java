@@ -1,6 +1,7 @@
 package com.bridgelabz.addressbook.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -13,11 +14,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bridgelabz.addressbook.Util.TokenUtil;
 import com.bridgelabz.addressbook.dto.ContactDTO;
 import com.bridgelabz.addressbook.dto.ResponseDTO;
+import com.bridgelabz.addressbook.exception.AddressBookException;
 import com.bridgelabz.addressbook.model.Contact;
 import com.bridgelabz.addressbook.service.IAddressBookService;
 
@@ -30,6 +34,9 @@ public class AddressBookController {
 	
 	@Autowired
     private IAddressBookService addressbookservice;
+	
+	@Autowired
+    TokenUtil tokenUtil;
 	
 	@RequestMapping(value = { "", "/", "/get" })
     public ResponseEntity<ResponseDTO> getContactData() {
@@ -53,7 +60,7 @@ public class AddressBookController {
 	    public ResponseEntity<ResponseDTO> createContactData(@Valid @RequestBody ContactDTO contactDTO) {
 	        Contact contactData = addressbookservice.createContact(contactDTO);
 	        log.debug("Address Book DTO: " +contactData.toString());
-	        ResponseDTO response = new ResponseDTO("Created contact data for", contactData);
+	        ResponseDTO response = new ResponseDTO("Created contact data for", tokenUtil.createToken(contactData.getContactId()));
 	        return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
 
 	    }
@@ -64,7 +71,7 @@ public class AddressBookController {
 	        Contact contactData = addressbookservice.updateContact(contactId, contactDTO);
 	        log.debug("AddressBook Contact After Update " + contactData.toString());
 
-	        ResponseDTO response = new ResponseDTO("Updated contact data for", contactData);
+	        ResponseDTO response = new ResponseDTO("Updated contact data for", tokenUtil.createToken(contactData.getContactId()));
 	        return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
 
 	    }
@@ -143,6 +150,27 @@ public class AddressBookController {
 	        return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
 	    }
 
-	
+	    @GetMapping("/readallcontactbytoken")
+	    public ResponseEntity<ResponseDTO> readdata(@RequestHeader(name = "token") String token) throws AddressBookException {
+	        List<Contact> contactList = null;
+	        contactList = addressbookservice.getAllContacts(token);
+	        if (contactList.size() > 0) {
+	            ResponseDTO responseDTO = new ResponseDTO("all user Fetched successfully", contactList);
+	            return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
+	        } else {
+	            throw new AddressBookException("No Data Found");
+	        }
+
+	    }
+
+	    @GetMapping("/readdatabytoken")
+	    public ResponseEntity<ResponseDTO> readupdatedata(@RequestHeader(name = "token") String token) throws AddressBookException {
+	        Optional<Contact> readData = null;
+	        readData = addressbookservice.getData(token);
+
+	        ResponseDTO responseDTO = new ResponseDTO("Updated data", readData);
+	        return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
+
+	    }
 	
 }

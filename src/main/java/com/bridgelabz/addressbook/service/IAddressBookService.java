@@ -1,6 +1,7 @@
 package com.bridgelabz.addressbook.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.bridgelabz.addressbook.dto.ContactDTO;
 import com.bridgelabz.addressbook.model.Contact;
@@ -30,4 +31,8 @@ public interface IAddressBookService {
     List<Contact> sortByCity();
 
     List<Contact> sortByPincode();
+    
+    Optional<Contact> getData(String token);
+
+    List<Contact> getAllContacts(String token);
 }

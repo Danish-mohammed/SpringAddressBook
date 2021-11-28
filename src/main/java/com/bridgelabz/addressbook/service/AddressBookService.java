@@ -1,10 +1,12 @@
 package com.bridgelabz.addressbook.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bridgelabz.addressbook.Util.TokenUtil;
 import com.bridgelabz.addressbook.dto.ContactDTO;
 import com.bridgelabz.addressbook.exception.AddressBookException;
 import com.bridgelabz.addressbook.model.Contact;
@@ -18,6 +20,9 @@ public class AddressBookService implements IAddressBookService{
 
 	@Autowired
     private AddressBookRepository addressBookRepository;
+	
+	 @Autowired
+	    TokenUtil tokenUtil;
 	
 	@Override
 	public List<Contact> getContact() {
@@ -36,6 +41,7 @@ public class AddressBookService implements IAddressBookService{
 	public Contact createContact(ContactDTO contactDTO) {
 		Contact contactData = new Contact(contactDTO);
 		log.debug("Address book data ", contactData);
+        contactData.createContactData(contactDTO);
 		return addressBookRepository.save(contactData);
 	}
 
@@ -91,5 +97,27 @@ public class AddressBookService implements IAddressBookService{
 	    @Override
 	    public List<Contact> sortByPincode() {
 	        return addressBookRepository.sortByPincode();
+	    }
+	    
+	    @Override
+	    public Optional<Contact> getData(String token) {
+	        Long id = tokenUtil.decodeToken(token);
+	        Optional<Contact> contactCheck = addressBookRepository.findById(Math.toIntExact(id));
+	        if (contactCheck.isPresent()) {
+	            Optional<Contact> contactData = addressBookRepository.findById(Math.toIntExact(id));
+	            return contactData;
+	        }
+	        return null;
+	    }
+
+	    @Override
+	    public List<Contact> getAllContacts(String token) {
+	        Long id = tokenUtil.decodeToken(token);
+	        Optional<Contact> contactCheck = addressBookRepository.findById(Math.toIntExact((id)));
+	        if (contactCheck.isPresent()) {
+	            List<Contact> contactList = addressBookRepository.findAll();
+	            return contactList;
+	        }
+	        return null;
 	    }
 }

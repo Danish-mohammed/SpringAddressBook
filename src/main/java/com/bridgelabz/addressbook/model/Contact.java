@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
+import java.time.LocalDateTime;
 import com.bridgelabz.addressbook.dto.ContactDTO;
 
 import lombok.Data;
@@ -28,10 +28,12 @@ public class Contact {
 	 private String city;
 	 private String zip;
 	 private String phone;
+	 
+	 private LocalDateTime registerDate;
+	 private LocalDateTime updateDate;
 	
-	public Contact(ContactDTO contactDTO) {
+	 public Contact(ContactDTO contactDTO) {
 		super();
-		
 		this.updateContact(contactDTO);
 	}
 	
@@ -42,8 +44,21 @@ public class Contact {
         this.city = contactDTO.city;
         this.state = contactDTO.state;
         this.zip = contactDTO.zip;
-        this.phone = contactDTO.phone;		
+        this.phone = contactDTO.phone;	
+        this.updateDate = LocalDateTime.now();
 	}
+	
+	 public void createContactData(ContactDTO contactDTO) {
+	   this.registerDate = LocalDateTime.now();
+       this.firstName = contactDTO.firstName;
+       this.lastName = contactDTO.lastName;
+       this.address = contactDTO.address;
+       this.city = contactDTO.city;
+       this.state = contactDTO.state;
+       this.zip = contactDTO.zip;
+       this.phone = contactDTO.phone;
+
+   }
 
 	public Contact() {
 		super();
