@@ -9,13 +9,13 @@ import com.bridgelabz.addressbook.model.Contact;
 public interface IAddressBookService {
 	List<Contact> getContact();
 
-    Contact getContactById(int contactId);
+    Contact getContactById(String token);
 
     Contact createContact(ContactDTO contactDTO);
 
-    Contact updateContact(int contactId, ContactDTO contactDTO);
+    Contact updateContact(String token, ContactDTO contactDTO);
 
-    void deleteContact(int contactId);
+    void deleteContact(String token);
     String deleteAllAddressBookData();
 
     List<Contact> getContactByCity(String city);

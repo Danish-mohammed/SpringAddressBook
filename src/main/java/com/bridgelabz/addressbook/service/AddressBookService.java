@@ -31,10 +31,10 @@ public class AddressBookService implements IAddressBookService{
 	}
 
 	@Override
-	public Contact getContactById(int contactId) {
+	public Contact getContactById(String token) {
 		
-		return addressBookRepository.findById(contactId)
-				.orElseThrow(() -> new AddressBookException("Address book cont "+contactId+" does not exists"));
+		return addressBookRepository.findById(tokenUtil.decodeToken(token))
+				.orElseThrow(() -> new AddressBookException("Address book cont "+tokenUtil.decodeToken(token)+" does not exists"));
 	}
 
 	@Override
@@ -46,15 +46,15 @@ public class AddressBookService implements IAddressBookService{
 	}
 
 	@Override
-	public Contact updateContact(int contactId, ContactDTO contactDTO) {
-		Contact contactData = this.getContactById(contactId);
+	public Contact updateContact(String token, ContactDTO contactDTO) {
+		Contact contactData = this.getContactById(token);
 		contactData.updateContact(contactDTO);
         return addressBookRepository.save(contactData);
 	}
 
 	@Override
-	public void deleteContact(int contactId) {
-		Contact contactData = this.getContactById(contactId);
+	public void deleteContact(String token) {
+		Contact contactData = this.getContactById(token);
 		addressBookRepository.delete(contactData);		
 	}
 	
@@ -101,10 +101,10 @@ public class AddressBookService implements IAddressBookService{
 	    
 	    @Override
 	    public Optional<Contact> getData(String token) {
-	        Long id = tokenUtil.decodeToken(token);
-	        Optional<Contact> contactCheck = addressBookRepository.findById(Math.toIntExact(id));
+	        
+	        Optional<Contact> contactCheck = addressBookRepository.findById(tokenUtil.decodeToken(token));
 	        if (contactCheck.isPresent()) {
-	            Optional<Contact> contactData = addressBookRepository.findById(Math.toIntExact(id));
+	            Optional<Contact> contactData = addressBookRepository.findById(tokenUtil.decodeToken(token));
 	            return contactData;
 	        }
 	        return null;
@@ -112,8 +112,8 @@ public class AddressBookService implements IAddressBookService{
 
 	    @Override
 	    public List<Contact> getAllContacts(String token) {
-	        Long id = tokenUtil.decodeToken(token);
-	        Optional<Contact> contactCheck = addressBookRepository.findById(Math.toIntExact((id)));
+	       
+	        Optional<Contact> contactCheck = addressBookRepository.findById(tokenUtil.decodeToken(token));
 	        if (contactCheck.isPresent()) {
 	            List<Contact> contactList = addressBookRepository.findAll();
 	            return contactList;

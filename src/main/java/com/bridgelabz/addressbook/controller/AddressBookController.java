@@ -48,9 +48,9 @@ public class AddressBookController {
     }
 
 	
-	 @GetMapping("/get/{contactId}")
-	    public ResponseEntity<ResponseDTO> getContactData(@PathVariable("contactId") int contactId) {
-		 Contact contactData = addressbookservice.getContactById(contactId);
+	 @GetMapping("/get")
+	    public ResponseEntity<ResponseDTO> getContactData(@RequestHeader String token) {
+		 Contact contactData = addressbookservice.getContactById(token);
 	        ResponseDTO response = new ResponseDTO("Get call success for id", contactData);
 	        return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
 
@@ -65,10 +65,10 @@ public class AddressBookController {
 
 	    }
 
-	    @PutMapping("/update/{contactId}")
-	    public ResponseEntity<ResponseDTO> updateContactData(@PathVariable("contactId") int contactId,
+	    @PutMapping("/update")
+	    public ResponseEntity<ResponseDTO> updateContactData(@RequestHeader String token,
 	                                                         @Valid @RequestBody ContactDTO contactDTO) {
-	        Contact contactData = addressbookservice.updateContact(contactId, contactDTO);
+	        Contact contactData = addressbookservice.updateContact(token, contactDTO);
 	        log.debug("AddressBook Contact After Update " + contactData.toString());
 
 	        ResponseDTO response = new ResponseDTO("Updated contact data for", tokenUtil.createToken(contactData.getContactId()));
@@ -76,11 +76,11 @@ public class AddressBookController {
 
 	    }
 
-	    @DeleteMapping("/delete/{contactId}")
-	    public ResponseEntity<ResponseDTO> deleteContactData(@PathVariable("contactId") int contactId) {
-	        addressbookservice.deleteContact(contactId);
+	    @DeleteMapping("/delete")
+	    public ResponseEntity<ResponseDTO> deleteContactData(@RequestHeader String token) {
+	        addressbookservice.deleteContact(token);
 
-	        ResponseDTO response = new ResponseDTO("Delete call success for id ", "deleted id:" + contactId);
+	        ResponseDTO response = new ResponseDTO("Delete call success for id ", "deleted id:" + tokenUtil.decodeToken(token));
 	        return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
 	    }
 	    

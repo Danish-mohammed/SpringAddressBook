@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.bridgelabz.addressbook.model.Contact;
 
-public interface AddressBookRepository extends JpaRepository<Contact, Integer> {
+public interface AddressBookRepository extends JpaRepository<Contact, Long> {
 	@Query(value = "select * from addressbook where city= :city", nativeQuery = true)
     List<Contact> findContactListByCity(String city);
 
